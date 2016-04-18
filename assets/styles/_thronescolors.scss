@@ -1,0 +1,151 @@
+$military: #c8232a;
+$intrigue: #13522f;
+$power: #292e5f;
+
+$targaryen: #1c1c1c;
+$baratheon: #e3d852;
+$stark: #cfcfcf;
+$greyjoy: #1d7a99;
+$lannister: #c00106;
+$tyrell: #509f16;
+$thenightswatch: #7a7a7a;
+$martell: #e89521;
+$neutral: #a99560;
+
+.color-targaryen {
+  color: $targaryen !important;
+}
+
+.color-baratheon {
+  color: $baratheon !important;
+}
+
+.color-stark {
+  color: $stark !important;
+}
+
+.color-greyjoy {
+  color: $greyjoy !important;
+}
+
+.color-lannister {
+  color: $lannister !important;
+}
+
+.color-tyrell {
+  color: $tyrell !important;
+}
+
+.color-thenightswatch {
+  color: $thenightswatch !important;
+}
+
+.color-martell {
+  color: $martell !important;
+}
+
+.color-neutral {
+  color: $neutral !important;
+}
+
+.color-military {
+  color: $military;
+}
+
+.color-intrigue {
+  color: $intrigue;
+}
+
+.color-power {
+  color: $power;
+}
+
+.border-targaryen {
+  border-color: $targaryen;
+}
+
+.border-baratheon {
+  border-color: $baratheon;
+}
+
+.border-stark {
+  border-color: $stark;
+}
+
+.border-greyjoy {
+  border-color: $greyjoy;
+}
+
+.border-lannister {
+  border-color: $lannister;
+}
+
+.border-tyrell {
+  border-color: $tyrell;
+}
+
+.border-thenightswatch {
+  border-color: $thenightswatch;
+}
+
+.border-martell {
+  border-color: $martell;
+}
+
+.border-neutral {
+  border-color: $neutral;
+}
+
+.background-targaryen {
+  background-color: $targaryen !important;
+  @extend .white;
+}
+
+.background-baratheon {
+  background-color: $baratheon !important;
+}
+
+.background-stark {
+  background-color: $stark !important;
+}
+
+.background-greyjoy {
+  background-color: $greyjoy !important;
+  @extend .white;
+}
+
+.background-lannister {
+  background-color: $lannister !important;
+  @extend .white;
+}
+
+.background-tyrell {
+  background-color: $tyrell !important;
+  @extend .white;
+}
+
+.background-thenightswatch {
+  background-color: $thenightswatch !important;
+}
+
+.background-martell {
+  background-color: $martell !important;
+  @extend .white;
+}
+
+.background-neutral {
+  background-color: $neutral !important;
+  @extend .white;
+}
+
+
+.white {
+  color: #fff !important;
+  a{
+    color: #fff !important;
+    text-decoration: underline;
+    &:hover{
+      text-decoration: none;
+    }
+  }
+}

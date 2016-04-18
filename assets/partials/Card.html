@@ -1,0 +1,312 @@
+<h1 class="text-center">Cards</h1>
+<ul class="nav nav-tabs">
+    <li ng-class="{'active': activeTab == 0}"><a ng-click="setActive(0)">Cards</a></li>
+    <li ng-class="{'active': activeTab == 1}"><a ng-click="setActive(1)">Create/Update</a></li>
+</ul>
+
+<div class="tab-content margin-top-one">
+    <div ng-class="{'active': activeTab == 0}" class="tab-pane">
+        <table ng-show="data.length > 0" ng-table="tableParams" class="table">
+            <tr ng-repeat="item in $data">
+                <td data-title="'Name'" sortable="'name'">
+                    <a href="/cards/{{item.code}}">{{item.name}}</a>
+                </td>
+                <td data-title="'Code'" sortable="'code'">
+                    {{item.code}}
+                </td>
+                <td data-title="'Traits'" sortable="'traits'">
+                    {{ item.traits }}
+                </td>
+                <td data-title="'Strength'" sortable="'strength'">
+                    {{ item.strength }}
+                </td>
+                <td data-title="'Pack'" sortable="'pack'">
+                    <a href="/packs/{{item.pack.code}}">{{ item.pack.name }}</a>
+                </td>
+                <td data-title="'Cost'" sortable="'cost'">
+                    {{ item.cost }}
+                </td>
+                <td ng-if="item" data-title="'Action'">
+                    <a data-ng-click="update(item);">update</a>
+                    <a data-ng-click="remove(item);">delete</a>
+                </td>
+            </tr>
+        </table>
+        <div ng-hide="data.length > 0" class="text-center alert alert-info">You have no cards right now.</div>
+    </div>
+    <div ng-class="{'active': activeTab == 1}" class="tab-pane">
+        <form ng-submit="createOrUpdate()" name="CorU" class="" novalidate>
+            <div class="clearfix" ng-show="isUpdate">
+                <a class="pull-right" href="#" ng-click="cancel()">X</a>
+            </div>
+            <input type="hidden" ng-model="currentItem.id" name="id">
+
+            <div class="row">
+                <div class="col-xs-6">
+                    <div class="form-group" ng-class="{'has-error': submitted  && CorU.name.$invalid }">
+                        <label for="">Name:</label>
+                        <input type="text" ng-model="currentItem.name" name="name" class="form-control" required>
+
+                        <div class="help-block" ng-messages="CorU.name.$error" ng-show="submitted">
+                            <p ng-message="required">Name is required.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xs-3">
+                    <div class="form-group" ng-class="{'has-error': submitted  && CorU.code.$invalid }">
+                        <label for="">Code:</label>
+                        <input type="text" ng-model="currentItem.code" name="code" class="form-control" required>
+
+                        <div class="help-block" ng-messages="CorU.code.$error" ng-show="submitted">
+                            <p ng-message="required">Code is required.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xs-3">
+                    <div class="form-group" ng-class="{'has-error': submitted  && CorU.position.$invalid }">
+                        <label for="">Position:</label>
+                        <input type="number" ng-model="currentItem.position" name="position" class="form-control"
+                               required>
+
+                        <div class="help-block" ng-messages="CorU.position.$error" ng-show="submitted">
+                            <p ng-message="required">Position is required.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-xs-4">
+                    <div class="form-group" ng-class="{'has-error': submitted  && CorU.pack.$invalid }">
+                        <label for="">Pack:</label>
+                        <select name="pack" ng-model="currentItem.pack" class="form-control">
+                            <option ng-selected="currentItem.pack == pack.id" ng-repeat="pack in packs" value="{{ pack.id }}">
+                                {{ pack.name }}
+                            </option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-xs-4">
+                    <div class="form-group" ng-class="{'has-error': submitted  && CorU.type.$invalid }">
+                        <label for="">Type:</label>
+                        <select name="type" ng-model="currentItem.type" class="form-control">
+                            <option ng-selected="currentItem.type == type.id" ng-repeat="type in types" value="{{ type.id }}">
+                                {{ type.name }}
+                            </option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-xs-4">
+                    <div class="form-group" ng-class="{'has-error': submitted  && CorU.color.$invalid }">
+                        <label for="">Color:</label>
+                        <select name="color" ng-model="currentItem.color" class="form-control">
+                            <option ng-selected="currentItem.color == color.id" ng-repeat="color in colors"
+                                    value="{{ color.id }}">{{ color.name }}
+                            </option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-xs-3">
+                    <div class="form-group" ng-class="{'has-error': submitted  && CorU.cost.$invalid }">
+                        <label for="">Cost:</label>
+                        <input type="number" ng-model="currentItem.cost" name="cost" class="form-control" required>
+
+                        <div class="help-block" ng-messages="CorU.cost.$error" ng-show="submitted">
+                            <p ng-message="required">Cost is required.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xs-3">
+                    <div class="form-group" ng-class="{'has-error': submitted  && CorU.quantity.$invalid }">
+                        <label for="">Quantity:</label>
+                        <input type="number" ng-model="currentItem.quantity" name="quantity" class="form-control"
+                               required>
+
+                        <div class="help-block" ng-messages="CorU.quantity.$error" ng-show="submitted">
+                            <p ng-message="required">Quantity is required.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xs-3">
+                    <div class="form-group" ng-class="{'has-error': submitted  && CorU.income.$invalid }">
+                        <label for="">Income:</label>
+                        <input type="number" ng-model="currentItem.income" name="income" class="form-control" required>
+
+                        <div class="help-block" ng-messages="CorU.income.$error" ng-show="submitted">
+                            <p ng-message="required">Income is required.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xs-3">
+                    <div class="form-group" ng-class="{'has-error': submitted  && CorU.claim.$invalid }">
+                        <label for="">Claim:</label>
+                        <input type="number" ng-model="currentItem.claim" name="claim" class="form-control" required>
+
+                        <div class="help-block" ng-messages="CorU.claim.$error" ng-show="submitted">
+                            <p ng-message="required">Claim is required.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-3">
+                    <div class="form-group" ng-class="{'has-error': submitted  && CorU.initiative.$invalid }">
+                        <label for="">Initiative:</label>
+                        <input type="number" ng-model="currentItem.initiative" name="initiative" class="form-control"
+                               required>
+
+                        <div class="help-block" ng-messages="CorU.initiative.$error" ng-show="submitted">
+                            <p ng-message="required">Initiative is required.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xs-3">
+                    <div class="form-group" ng-class="{'has-error': submitted  && CorU.reserve.$invalid }">
+                        <label for="">Reserve:</label>
+                        <input type="number" ng-model="currentItem.reserve" name="reserve" class="form-control"
+                               required>
+
+                        <div class="help-block" ng-messages="CorU.reserve.$error" ng-show="submitted">
+                            <p ng-message="required">Reserve is required.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xs-3">
+                    <div class="form-group" ng-class="{'has-error': submitted  && CorU.deck_limit.$invalid }">
+                        <label for="">Deck limit:</label>
+                        <input type="number" ng-model="currentItem.deck_limit" name="deck_limit" class="form-control"
+                               required>
+
+                        <div class="help-block" ng-messages="CorU.deck_limit.$error" ng-show="submitted">
+                            <p ng-message="required">Deck limit is required.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xs-3">
+                    <div class="form-group" ng-class="{'has-error': submitted  && CorU.strength.$invalid }">
+                        <label for="">Strength:</label>
+                        <input type="number" ng-model="currentItem.strength" name="strength" class="form-control"
+                               required>
+
+                        <div class="help-block" ng-messages="CorU.strength.$error" ng-show="submitted">
+                            <p ng-message="required">Strength is required.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-xs-6">
+                    <div class="form-group" ng-class="{'has-error': submitted  && CorU.illustrator.$invalid }">
+                        <label for="">Illustrator:</label>
+                        <input type="text" ng-model="currentItem.illustrator" name="illustrator" class="form-control"
+                               required>
+
+                        <div class="help-block" ng-messages="CorU.illustrator.$error" ng-show="submitted">
+                            <p ng-message="required">Illustrator is required.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xs-6">
+                    <div class="form-group" ng-class="{'has-error': submitted  && CorU.traits.$invalid }">
+                        <label for="">Traits:</label>
+                        <input type="text" ng-model="currentItem.traits" name="traits" class="form-control" required>
+
+                        <div class="help-block" ng-messages="CorU.traits.$error" ng-show="submitted">
+                            <p ng-message="required">Traits is required.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-xs-6">
+                    <div class="form-group" ng-class="{'has-error': submitted  && CorU.text.$invalid }">
+                        <label for="">Text:</label>
+                        <textarea name="text" ng-model="currentItem.text" class="form-control" required></textarea>
+
+                        <div class="help-block" ng-messages="CorU.text.$error" ng-show="submitted">
+                            <p ng-message="required">Text is required.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xs-6">
+                    <div class="form-group" ng-class="{'has-error': submitted  && CorU.flavor.$invalid }">
+                        <label for="">Flavor:</label>
+                        <textarea name="flavor" ng-model="currentItem.flavor" class="form-control" required></textarea>
+
+                        <div class="help-block" ng-messages="CorU.flavor.$error" ng-show="submitted">
+                            <p ng-message="required">Flavor is required.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-xs-2 col-xs-push-1">
+                    <div class="form-group">
+                        <label for="">Unique:</label>
+                        <select name="is_unique" ng-model="currentItem.is_unique" class="form-control">
+                            <option ng-selected="currentItem.is_unique == true" value="true">True</option>
+                            <option ng-selected="currentItem.is_unique == false" value="false">False</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-xs-2 col-xs-push-1">
+                    <div class="form-group">
+                        <label for="">Loyal:</label>
+                        <select name="is_loyal" ng-model="currentItem.is_loyal" class="form-control">
+                            <option ng-selected="currentItem.is_loyal == true" value="true">True</option>
+                            <option ng-selected="currentItem.is_loyal == false" value="false">False</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-xs-2 col-xs-push-1">
+                    <div class="form-group">
+                        <label for="">Military:</label>
+                        <select name="is_military" ng-model="currentItem.is_military" class="form-control">
+                            <option ng-selected="currentItem.is_military == true" value="true">True</option>
+                            <option ng-selected="currentItem.is_military == false" value="false">False</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-xs-2 col-xs-push-1">
+                    <div class="form-group">
+                        <label for="">Intrigue:</label>
+                        <select name="is_intrigue" ng-model="currentItem.is_intrigue" class="form-control">
+                            <option ng-selected="currentItem.is_intrigue == true" value="true">True</option>
+                            <option ng-selected="currentItem.is_intrigue == false" value="false">False</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-xs-2 col-xs-push-1">
+                    <div class="form-group">
+                        <label for="">Power:</label>
+                        <select name="is_power" ng-model="currentItem.is_power" class="form-control">
+                            <option ng-selected="currentItem.is_power == true" value="true">True</option>
+                            <option ng-selected="currentItem.is_power == false" value="false">False</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="form-group" ng-class="{'has-error': submitted  && CorU.octgnid.$invalid }">
+                        <label for="">Octgnid:</label>
+                        <input type="text" ng-model="currentItem.octgnid" name="octgnid" class="form-control" required>
+
+                        <div class="help-block" ng-messages="CorU.octgnid.$error" ng-show="submitted">
+                            <p ng-message="required">Octgnid is required.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <input class="btn btn-success" type="submit" value="submit" ng-click="submitted = true">
+        </form>
+    </div>
+</div>

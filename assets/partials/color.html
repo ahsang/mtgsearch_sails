@@ -1,0 +1,55 @@
+<h1 class="text-center">Colors</h1>
+<div class="row">
+    <div class="col-xs-6">
+        <table ng-show="data.length > 0" ng-table="tableParams" class="table">
+            <tr ng-repeat="item in $data">
+                <td data-title="'Name'" sortable="'name'">
+                    <a href="/colors/{{item.code}}">{{item.name}}</a>
+                </td>
+                <td data-title="'Code'" sortable="'code'">
+                    {{item.code}}
+                </td>
+                <td data-title="'Primary'" sortable="'is_primary'">
+                    {{item.is_primary}}
+                </td>
+                <td ng-if="item" data-title="'Action'">
+                    <a data-ng-click="update(item);">update</a>
+                    <a data-ng-click="remove(item);">delete</a>
+                </td>
+            </tr>
+        </table>
+        <div ng-hide="data.length > 0" class="text-center alert alert-info">You have no colors right now.</div>
+    </div>
+    <div class="col-xs-6">
+        <form ng-submit="createOrUpdate()" name="CorU" novalidate>
+            <a class="pull-right" href="#" ng-click="cancel()" ng-show="isUpdate">X</a>
+            <input type="hidden" ng-model="currentItem.id" name="id">
+
+            <div class="form-group" ng-class="{'has-error': submitted  && CorU.name.$invalid }">
+                <label for="">Name:</label>
+                <input type="text" ng-model="currentItem.name" name="name" class="form-control" required>
+
+                <div class="help-block" ng-messages="CorU.name.$error" ng-show="submitted">
+                    <p ng-message="required">Name is required.</p>
+                </div>
+            </div>
+            <div class="form-group" ng-class="{'has-error': submitted  && CorU.code.$invalid }">
+                <label for="">Code:</label>
+                <input type="text" ng-model="currentItem.code" name="code" class="form-control" required>
+
+                <div class="help-block" ng-messages="CorU.code.$error" ng-show="submitted">
+                    <p ng-message="required">Code is required.</p>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="">Primary:</label>
+                <select name="is_primary" ng-model="currentItem.is_primary" id="" class="form-control">
+                    <option ng-selected="currentItem.is_primary == true" value="true">True</option>
+                    <option ng-selected="currentItem.is_primary == false" value="false">False</option>
+                </select>
+            </div>
+
+            <input class="btn btn-success" type="submit" value="submit" ng-click="submitted = true">
+        </form>
+    </div>
+</div>

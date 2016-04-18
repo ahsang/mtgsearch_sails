@@ -1,0 +1,7 @@
+{
+  "validation" : {
+    "unique" : "%s is already in use.",
+    "required": "%s must have a value.",
+    "email": "%s muste be a valid email adress."
+  }
+}

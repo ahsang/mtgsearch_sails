@@ -1,0 +1,38 @@
+<div class="row">
+    <div class="col-xs-7">
+        <h1 class="color-{{ card.color.code }}">
+            <span class="icon-unique" ng-show="card.is_unique"></span>
+            {{ card.name }}
+        </h1>
+
+        <p>
+            <b>{{ card.type.name }}.</b>
+            <span ng-show="card.cost">Cost: {{ card.cost }}.</span>
+            <span ng-show="card.strength">STR: {{ card.strength }}.</span>
+            <span class="icon-military color-military" ng-show="card.is_military"></span>
+            <span class="icon-power color-power" ng-show="card.is_power"></span>
+            <span ng-show="card.income">Income: {{ card.income }}.</span>
+            <span ng-show="card.initiative">Initiative: {{ card.initiative }}.</span>
+            <span ng-show="card.claim">Claim: {{ card.claim }}.</span>
+            <span ng-show="card.reserve">Reserve: {{ card.reserve }}.</span>
+            <span ng-show="card.deck_limit && card.type.code === 'plot'">Deck limit: {{ card.deck_limit }}.</span>
+        </p>
+
+        <p><b>{{card.traits}}</b></p>
+
+        <p class="card-text border-{{ card.color.code }}" ng-bind-html="card.text | parsetext | unsafe"></p>
+        <cite>{{card.flavor}}</cite>
+
+        <p>Illus. {{card.illustrator}}</p>
+
+        <div class="clearfix">
+            <p class="pull-left">{{card.color.name}}. <span ng-show="card.is_loyal">Loyal.</span><span
+                    ng-hide="card.is_loyal">Non-loyal.</span></p>
+
+            <p class="pull-right">{{card.pack.name}} #{{card.position}}.</p>
+        </div>
+    </div>
+    <div class="col-xs-5 text-center">
+        <img src="/api/image/{{ card.code }}" alt="{{ card.name }}">
+    </div>
+</div>

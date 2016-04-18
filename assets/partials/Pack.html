@@ -1,0 +1,55 @@
+<h1 class="text-center">Packs</h1>
+<div class="row">
+    <div class="col-xs-6">
+        <table ng-show="data.length > 0" ng-table="tableParams" class="table">
+            <tr ng-repeat="item in $data">
+                <td data-title="'Name'" sortable="'name'">
+                    <a href="/packs/{{item.code}}">{{item.name}}</a>
+                </td>
+                <td data-title="'Code'" sortable="'code'">
+                    {{item.code}}
+                </td>
+                <td data-title="'Cycle'" sortable="'cycle'">
+                    {{ item.cycle.name }}
+                </td>
+                <td ng-if="item" data-title="'Action'">
+                    <a data-ng-click="update(item);">update</a>
+                    <a data-ng-click="remove(item);">delete</a>
+                </td>
+            </tr>
+        </table>
+        <div ng-hide="data.length > 0" class="text-center alert alert-info">You have no packs right now.</div>
+    </div>
+    <div class="col-xs-6">
+        <form ng-submit="createOrUpdate()" name="CorU" novalidate>
+            <a class="pull-right" href="#" ng-click="cancel()" ng-show="isUpdate">X</a>
+            <input type="hidden" ng-model="currentItem.id" name="id">
+
+            <div class="form-group" ng-class="{'has-error': submitted  && CorU.name.$invalid }">
+                <label for="">Name:</label>
+                <input type="text" ng-model="currentItem.name" name="name" class="form-control" required>
+
+                <div class="help-block" ng-messages="CorU.name.$error" ng-show="submitted">
+                    <p ng-message="required">Name is required.</p>
+                </div>
+            </div>
+            <div class="form-group" ng-class="{'has-error': submitted  && CorU.code.$invalid }">
+                <label for="">Code:</label>
+                <input type="text" ng-model="currentItem.code" name="code" class="form-control" required>
+
+                <div class="help-block" ng-messages="CorU.code.$error" ng-show="submitted">
+                    <p ng-message="required">Code is required.</p>
+                </div>
+            </div>
+
+            <div class="form-group" ng-class="{'has-error': submitted  && CorU.code.$invalid }">
+                <label for="">Cycle:</label>
+                <select name="cycle" ng-model="currentItem.cycle" id="" class="form-control">
+                    <option ng-selected="currentItem.cycle == cycle.id" ng-repeat="cycle in cycles" value="{{ cycle.id }}">{{ cycle.name }}</option>
+                </select>
+            </div>
+
+            <input class="btn btn-success" type="submit" value="submit" ng-click="submitted = true">
+        </form>
+    </div>
+</div>

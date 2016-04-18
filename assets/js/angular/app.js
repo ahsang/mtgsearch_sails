@@ -1,0 +1,1 @@
+window.app = angular.module('GoT', ['ngStorage', 'ngRoute', 'ui.bootstrap', 'ngTable', 'ngMessages']);

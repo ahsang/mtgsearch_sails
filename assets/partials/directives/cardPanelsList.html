@@ -1,0 +1,38 @@
+<div class="row">
+    <div class="col-xs-12">
+        <div class="alert alert-info text-center" ng-hide="cards.length > 0 || message.length <= 0">{{ message }}</div>
+    </div>
+    <div class="col-xs-12" ng-repeat="card in cards" ng-show="($index - 1) < loaded">
+        <div class="panel panel-default">
+            <div class="panel-heading background-{{ card.color.code }}">
+                <a href="/cards/{{card.code}}">{{ card.name }}</a>
+                <span class="pull-right"><a href="/packs/{{card.pack.code}}">{{card.pack.name}}</a> #{{ card.position }}</span>
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-xs-1 color-image">
+                        <a href="/colors/{{ card.color.code }}" class="color-{{ card.color.code }}">
+                            <span class="icon-{{ card.color.code }}"></span>
+                        </a>
+                    </div>
+                    <div class="col-xs-11">
+                        <p ng-show="card.text" class="card-text border-{{ card.color.code }}"
+                           ng-bind-html="card.text | parsetext | unsafe"></p>
+                        <cite ng-show="card.flavor" ng-bind-html="card.flavor | unsafe"></cite>
+                    </div>
+                </div>
+            </div>
+            <div class="panel-footer clearfix">
+                <span class="pull-left">
+                    <b><a href="/types/{{ card.type.code }}">{{ card.type.name }}.</a></b>
+                    <span ng-show="card.cost">Cost: {{ card.cost }}.</span>
+                    <span ng-show="card.strength">STR: {{ card.strength }}.</span>
+                </span>
+                <span class="pull-right"><b>{{card.traits}}</b></span>
+            </div>
+        </div>
+    </div>
+    <div class="col-xs-12 form-group">
+        <input type="button" class="btn btn-block btn-success" ng-show="loaded < cards.length" ng-click="loadMore()" value="Load more">
+    </div>
+</div>

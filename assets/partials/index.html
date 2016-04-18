@@ -1,0 +1,48 @@
+<div class="row">
+    <div class="col-xs-12">
+        <div class="form-group">
+            <input type="text" ng-model="search.value" name="" class="form-control" placeholder="Search...">
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-xs-4">
+        <div class="form-group">
+            <select ng-model="search.color" class="form-control">
+                <option value="">Select color</option>
+                <option ng-selected="search.color == color.id" ng-repeat="color in colors"
+                        value="{{ color.id }}">
+                    {{ color.name }}
+                </option>
+            </select>
+        </div>
+    </div>
+    <div class="col-xs-4">
+        <div class="form-group">
+            <select ng-model="search.type" class="form-control">
+                <option value="">Select type</option>
+                <option ng-selected="search.type == type.id" ng-repeat="type in types" value="{{ type.id }}">
+                    {{ type.name }}
+                </option>
+            </select>
+        </div>
+    </div>
+    <div class="col-xs-4">
+        <div class="form-group">
+            <select ng-model="search.pack" class="form-control">
+                <option value="">Select pack</option>
+                <option ng-selected="search.pack == pack.id" ng-repeat="pack in packs" value="{{ pack.id }}">
+                    {{ pack.name }}
+                </option>
+            </select>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-xs-12 text-center">
+        <div class="form-group">
+            <input type="submit" ng-click="search()" class="btn btn-success btn-block" value="Search">
+        </div>
+    </div>
+</div>
+<card-panels-list message="'You have not made an valid search yet.'" cards="cards"></card-panels-list>
