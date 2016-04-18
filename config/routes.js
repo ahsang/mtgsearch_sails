@@ -32,10 +32,6 @@ module.exports.routes = {
      *                                                                          *
      ***************************************************************************/
 
-    "^(?!\/api).+": {
-        view: 'homepage',
-        skipAssets: true
-    },
 
     '/api/card/import/:page?': {
         controller: 'Card',
@@ -70,6 +66,11 @@ module.exports.routes = {
     '/api/image/:code': {
         controller: 'Image',
         action: 'get'
+    },
+
+    "/*": {
+        view: 'homepage',
+        skipAssets: true
     }
 
     /***************************************************************************
