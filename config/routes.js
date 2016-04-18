@@ -68,9 +68,8 @@ module.exports.routes = {
         action: 'get'
     },
 
-    "/*": {
-        view: 'homepage',
-        skipAssets: true
+    "r|^(?!.*\.)|": {
+        view: 'homepage'
     }
 
     /***************************************************************************
